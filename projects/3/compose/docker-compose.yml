@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+    frontend:
+        container_name: amaris-front
+        image: amaris/front:latest
+        ports:
+          - "80:80"
+        networks:
+          - front_net
+        links:
+          - backend:backendServer
+        depends_on:
+          - backend
+
+    backend:
+        container_name: amaris-back
+        image: amaris/backend:latest
+        links:
+          - database:mongoServer
+        networks:
+            - back_net
+            - front_net
+        depends_on:
+          - database
+
+    database:
+        container_name: amaris-db
+        image: amaris/database:latest
+        volumes:
+            - mongo_volume:/data/db:rw
+        networks:
+            - back_net
+
+
+networks:
+    front_net:
+        driver: bridge
+    back_net:
+        driver: bridge
+
+volumes:
+    mongo_volume:
+        external: true
