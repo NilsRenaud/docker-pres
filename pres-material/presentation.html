@@ -1,30 +1,23 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/reveal.css" />
+		<link rel="stylesheet" href="css/theme/black.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/0.96/head.min.js"></script>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section>
 					<h1>Docker</h1>
-					<h2>Intro &amp; example</h2>
+					<h3>Intro &amp; example</h3>
 				</section>
 				<section>
 					<ul>
 						<li>Why Docker ?</li>
 						<li>What is Docker ?</li>
+						<li>How to use it ?</li>
 						<li>How it works ?</li>
 						<li>Let's try !</li>
-						<li>Tools
-							<ul>
-								<li>Docker Toolbox</li>
-								<li>Docker Machine</li>
-								<li>Docker Compose</li>
-								<li>Docker Swarm</li>
-							</ul>
-						</li>
-						<li>MOAR...</li>
 					</ul>
 				</section>
 				<section>
@@ -32,28 +25,7 @@
 						<h3>Why Docker ?</h3>
 					</section>
 					<section>
-						<h2>Prod deployment : I swear, It works on my machine !</h2>
-					</section>
-					<section>
-						<h2>Prod deployment : I swear, It works on my machine !</h2>
-						<ul>
-							<li>Forgot system variable ?</li>
-							<li>Forgot property file</li>
-							<li>Bad server version ?</li>
-							<li>Bad engine version ?</li>
-							<li>Bad OS ?</li>
-							<li>...</li>
-							<li>But that will be OK on production !</li>
-						</ul>
-						<aside class="notes">
-        			Nos applications ont énormément de dépendances et il ne suffit pas de récupérer l'executable pour qu'elles se lancent.
-    				</aside>
-					</section>
-					<section>
-						<h2>New job ! First week : Set up environment...</h2>
-					</section>
-					<section>
-						<h2>New job ! First week : Set up environment...</h2>
+						<h3>New job ! First week : Set up environment...</h3>
 						<ul>
 							<li>Follow the 50 pages install guide</li>
 							<li>But wait... that part is useless</li>
@@ -68,14 +40,55 @@
         			Des logiciels peuvent être incompatibles entre eux selon leur utilisation du système. Ex : même version d'une même application (java :°)
     				</aside>
 					</section>
+					<section>
+						<h3>Prod deployment : I swear, It works on my machine !</h3>
+						<ul>
+							<li>Forgot system variable ?</li>
+							<li>Forgot property file</li>
+							<li>Bad server version ?</li>
+							<li>Bad engine version ?</li>
+							<li>Bad OS ?</li>
+							<li>...</li>
+							<li>But that will be OK on production !</li>
+						</ul>
+						<aside class="notes">
+        			Nos applications ont énormément de dépendances et il ne suffit pas de récupérer l'executable pour qu'elles se lancent.
+    				</aside>
+					</section>
+					<section>
+						<h3>Ops settings</h3>
+						<ul>
+							<li>Process isolation</li>
+							<li>Rights management</li>
+							<li>Application dependant exploitation</li>
+							<li>Coherence between apps</li>
+							<li>Long set up time</li>
+							<li>Long installation time</li>
+						</ul>
+						<aside class="notes">
+							La gestion de l'application en production est complexe et dépendante de l'application. L'uniformisation doit être une volonté de l'Ops.
+						</aside>
+					</section>
+					<section>
+						<h3>Ok, Go VM !</h3>
+						<ul>
+							<li>Huge memory footprint : useless copy of linux kernel</li>
+							<li>Heavy load : Many kernels running in one machine</li>
+							<li>Long startup time</li>
+						</ul>
+					<aside class="notes">
+						Bonne solution, mais beaucoup de gaspillage !
+					</aside>
+					</section>
+				</section>
 				<section>
 					<section>
 						<h3>What is Docker ?</h3>
 					</section>
 					<section>
-						<h2>Background</h2>
+						<h3>Background</h3>
 						<ul>
-							<li>A company (french [!] located in california): Docker, Inc</li>
+							<li>A (french !) company settled in california: Docker, Inc</li>
 							<li>CEO : Solomon Hykes</li>
 							<li>Which releases an Open source product : Docker</li>
 							<li>Since 2013</li>
@@ -83,37 +96,99 @@
 							<li>Github : 30k commits, 38k stars, 11k forks.</li>
 						</ul>
 						<aside class="notes">
-							Linux kernel : 40k stars
+							Info : Linux kernel = 40k stars
 						</aside>
 					</section>
 					<section>
-						<h2>Main Purpose</h2>
+						<h3>Main Purpose</h3>
 						Pack, ship and run any application as containers
+						<aside class="notes">
+							Un container est une excellente image, les bateaux de fret ne savent pas ce qu'ils transportent
+							mais ils le transportent tous de la même manière.
+						</aside>
 					</section>
 					<section>
-						<h2>What is a container</h2>
+						<h3>What is a container ?</h3>
 						<q cite="Wikipedia">
-							Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run: code, runtime, system tools, system libraries &amp; anything you can install on a server.
+							Docker containers wrap up a piece of software in a complete filesystem that contains everything it needs to run:
+							code, runtime, system tools, system libraries &amp; anything you can install on a server.
 						</q>
 					</section>
 					<section>
-						<h2>Container vs VM</h2>
-						<img src="https://www.brianchristner.io/content/images/2016/03/vm-vs-docker-container.png"/>
+						<h3>Container vs VM</h3>
+						<img src="img/container_vs_vm.png"/>
 					</section>
 					<section>
-						<h2>How to get containers</h2>
+						<h3>So a container is : </h3>
+						<ul>
+							<li>Light</li>
+							<li>Portable</li>
+							<li>Predictible</li>
+							<li>isolated</li>
+							<li>Created from templates layers</li>
+						</ul>
 					</section>
 				</section>
-				<section><h3>Why Docker ?</h3></section>
-				<section><h3>How it works ?</h3></section>
+				<section>
+					<section>
+						<h3>How to use it ?</h3>
+					</section>
+					<section>
+						<h3>Main process</h3>
+						<img src="img/docker_functions.jpg">
+					</section>
+					<section>
+						<h3>Dockerfile you said ?</h3>
+						<a href="https://hub.docker.com/_/node/">https://hub.docker.com/_/node/</a>
+					</section>
+					<section>
+						<h3>Docker Ecosystem</h3>
+						<ul>
+							<li><b>Docker Engine server</b> : Container deployment manager</li>
+							<li><b>Docker Engine client</b> : Container packager</li>
+							<li><b>Docker Hub</b> : Public images repository</li>
+							<li><b>Docker Hub ($)</b> : Private images repository + Build pipeline</li>
+							<li><b>Docker Compose</b> : Container group manager</li>
+							<li><b>Docker Swarm</b> : Docker cluster scheduler</li>
+							<li><b>Docker Tool</b> : Wrapper for windows and MacOs</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>How it works ?</h3>
+					</section>
+					<section>
+						<h3>On top of LXC</h3>
+						<ul>
+							<li>CGroup : Resources isolation for processes</li>
+							<li>AppArmor/SeLinux : Security profiles on programs</li>
+							<li>ChRoot : Change root directory for processes</li>
+							<li>Kernel namespace : system resources isolation and virtualization</li>
+							<li>Union FS : Layered FileSystem</li>
+						</ul>
+						<aside class="notes">
+							Union FS : Comme un liveCD, les couches sont read only, on rajoute juste un masque d'usage sur des couches read only.
+							Cela permet de gagner de la place en mémoire en partageant les couches sans craintes.
+						</aside>
+					</section>
+				</section>
 				<section><h3>Let's try !</h3></section>
-				<section><h3>Tools</h3></section>
-				<section><h3>MOAR...</h3></section>
 			</div>
 		</div>
-		<script src="js/reveal.js"></script>
-		<script>
-			Reveal.initialize();
+		<script type="text/javascript" src="js/reveal.js"></script>
+		<script type="text/javascript">
+			Reveal.initialize({
+		    dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
+		    ]
+			});
 		</script>
-        </body>
+	</body>
 </html>
